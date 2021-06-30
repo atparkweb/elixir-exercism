@@ -25,7 +25,6 @@ defmodule WordCountTest do
     assert WordCount.count("testing, 1, 2 testing") == expected
   end
 
-  @tag :pending
   test "hyphens" do
     expected = %{"co-operative" => 1}
     assert WordCount.count("co-operative") == expected
