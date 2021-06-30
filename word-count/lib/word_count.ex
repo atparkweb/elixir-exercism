@@ -8,13 +8,13 @@ defmodule WordCount do
   def format_key(key) do
     key
     |> String.downcase
-    |> (fn (key) -> Regex.replace(~r/[^[\-a-z0-9]/, key, "") end).()
+    |> (fn (key) -> Regex.replace(~r/[^[\-\p{L}0-9]/u, key, "") end).()
   end
 
   @spec count(String.t()) :: map
   def count(sentence) do
     sentence
-    |> String.split
+    |> String.split(~r/[ _]/, trim: true)
     |> Enum.reduce(%{}, fn (key, acc) ->
          key = format_key(key)
          val = Map.get(acc, key)
