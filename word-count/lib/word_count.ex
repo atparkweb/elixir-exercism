@@ -8,7 +8,7 @@ defmodule WordCount do
   def format_key(key) do
     key
     |> String.downcase
-    |> (fn (key) -> Regex.replace(~r/[^[a-z]/, key, "") end).()
+    |> (fn (key) -> Regex.replace(~r/[^[a-z0-9]/, key, "") end).()
   end
 
   @spec count(String.t()) :: map
