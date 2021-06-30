@@ -4,18 +4,26 @@ defmodule WordCount do
 
   Words are compared case-insensitively.
   """
+  
+  def format_key(key) do
+    key
+    |> String.downcase
+    |> (fn (key) -> Regex.replace(~r/[^[a-z]/, key, "") end).()
+  end
+
   @spec count(String.t()) :: map
   def count(sentence) do
     sentence
     |> String.split
-    |> Enum.map(fn (a) -> String.downcase(a) end)
     |> Enum.reduce(%{}, fn (key, acc) ->
+         key = format_key(key)
          val = Map.get(acc, key)
-         acc = if val do
+         if val do
 	   Map.put(acc, key, val + 1)
 	 else
 	   Map.put(acc, key, 1)
 	 end
        end)
+    |> Map.delete("")
   end
 end
